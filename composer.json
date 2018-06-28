@@ -1,0 +1,10 @@
+{
+    "name": "dns/blog",
+    "authors": [
+        {
+            "name": "ZemlyanukhinNikita",
+            "email": "nakeg8@gmail.com"
+        }
+    ],
+    "require": {}
+}
