@@ -6,5 +6,7 @@
             "email": "nakeg8@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "robmorgan/phinx": "^0.10.3"
+    }
 }
