@@ -4,18 +4,22 @@ namespace config;
 
 class Router
 {
-    public function start()
+    private function routing()
     {
-        $routes = [
+        return $routes = [
             'news/([0-9]+)' => 'news/show/$1',
             'news' => 'news/index',
         ];
+    }
+
+    public function start()
+    {
 
         if (!empty($_SERVER['REQUEST_URI'])) {
             $uri = trim($_SERVER['REQUEST_URI'], '/');
         }
 
-        foreach ($routes as $uriPattern => $path) {
+        foreach ($this->routing() as $uriPattern => $path) {
 
             if (preg_match("~$uriPattern~", $uri)) {
 
@@ -23,18 +27,17 @@ class Router
 
                 $segments = explode('/', $internalRoute);
 
-                $controllerName = array_shift($segments).'Controller';
-                $controllerName = 'controllers\\'.ucfirst($controllerName);
+                $controllerName = array_shift($segments) . 'Controller';
+                $controllerName = 'controllers\\' . ucfirst($controllerName);
 
                 $actionName = array_shift($segments);
 
                 $parameters = $segments;
 
                 $controllerObject = new $controllerName;
-                $result = call_user_func_array([$controllerObject, $actionName],$parameters);
+                $result = call_user_func_array([$controllerObject, $actionName], $parameters);
 
-                if($result!==null)
-                {
+                if ($result !== null) {
                     break;
                 }
             }
