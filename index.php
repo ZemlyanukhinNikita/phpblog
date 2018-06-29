@@ -1,9 +1,9 @@
 <?php
 //phpinfo();
 
+use config\Database;
 use config\Router;
 
-require_once 'config/Database.php';
 require_once 'config/Loader.php';
 
 $loader = new Loader();
