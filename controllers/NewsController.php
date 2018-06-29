@@ -7,10 +7,13 @@ class NewsController
     public function index()
     {
         echo 'index';
+        return true;
     }
 
-    public function getNews()
+    public function show($id)
     {
-        echo 'getNews';
+        echo $id;
+        echo 'show';
+        return true;
     }
 }

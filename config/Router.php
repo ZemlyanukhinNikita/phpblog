@@ -6,20 +6,38 @@ class Router
 {
     public function start()
     {
-        $route = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        //echo $route;
-        $routing = [
-            '/' => ['controller' => 'News', 'action' => 'index'],
-            '/news' => ['controller' => 'News', 'action' => 'getNews'],
+        $routes = [
+            'news/([0-9]+)' => 'news/show/$1',
+            'news' => 'news/index',
         ];
 
-        if (isset($routing[$route])) {
-            $controller = 'controllers\\' . $routing[$route]['controller'] . 'Controller';
-            $cntrl = new $controller();
-            $cntrl->{$routing[$route]['action']}();
-        } else {
-            //todo return 404 view
-            echo '404';
+        if (!empty($_SERVER['REQUEST_URI'])) {
+            $uri = trim($_SERVER['REQUEST_URI'], '/');
+        }
+
+        foreach ($routes as $uriPattern => $path) {
+
+            if (preg_match("~$uriPattern~", $uri)) {
+
+                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
+
+                $segments = explode('/', $internalRoute);
+
+                $controllerName = array_shift($segments).'Controller';
+                $controllerName = 'controllers\\'.ucfirst($controllerName);
+
+                $actionName = array_shift($segments);
+
+                $parameters = $segments;
+
+                $controllerObject = new $controllerName;
+                $result = call_user_func_array([$controllerObject, $actionName],$parameters);
+
+                if($result!==null)
+                {
+                    break;
+                }
+            }
         }
     }
 
