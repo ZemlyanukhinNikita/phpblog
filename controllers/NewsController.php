@@ -26,6 +26,7 @@ class NewsController
     public function show($id)
     {
         $itemNew = $this->newsModel->getNewById($id);
+        $this->newsModel->updateViews($id);
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/itemNew.php';
         return true;
     }
@@ -52,9 +53,9 @@ class NewsController
 
                 $tmpName = $_FILES['preview_image']['tmp_name'];
                 $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-                $hashName = md5($imageName) . '.' . $ext;
-                if (copy($tmpName, $_SERVER['DOCUMENT_ROOT'] . '/images/' . $hashName)) {
-                    return $hashName;
+                $pathName = '/images/' . md5($imageName) . '.' . $ext;
+                if (copy($tmpName, $_SERVER['DOCUMENT_ROOT'] . $pathName)) {
+                    return $pathName;
                 } else {
                     return null;
                 }
@@ -72,7 +73,7 @@ class NewsController
 
         $itemNewId = $this->newsModel->createNew($_POST['title'], $_POST['content'], $previewImage);
 
-        header('Location:/news/'.$itemNewId);
+        header('Location:/news/' . $itemNewId);
         return true;
     }
 
@@ -85,7 +86,7 @@ class NewsController
 
         $itemNew = $this->newsModel->editNew($id, $_POST['title'], $_POST['content'], $previewImage);
 
-        header('Location:/news/'.$id);
+        header('Location:/news/' . $id);
         return true;
     }
 }
