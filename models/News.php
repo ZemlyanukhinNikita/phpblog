@@ -58,7 +58,7 @@ class News
         $id = intval($id);
 
         if ($id) {
-            $stmt = $this->conn->prepare("UPDATE news set views = views+1 where id=?");
+            $stmt = $this->conn->prepare("update news set views = views+1 where id=?");
             $stmt->bindParam(1, $id);
             $stmt->execute();
         }
@@ -79,7 +79,7 @@ class News
 
         $previewImage = $this->replacingEmptyStringWithNull($previewImage);
 
-        $stmt = $this->conn->prepare("INSERT INTO news (title, content, preview_image_slug) VALUES (?, ?, ?)");
+        $stmt = $this->conn->prepare("insert into news (title, content, preview_image_slug) values (?, ?, ?)");
         $stmt->bindParam(1, $title);
         $stmt->bindParam(2, $content);
         $stmt->bindParam(3, $previewImage);
@@ -95,7 +95,7 @@ class News
 
             $previewImage = $this->replacingEmptyStringWithNull($previewImage);
 
-            $stmt = $this->conn->prepare("UPDATE news set title=?, content=?, preview_image_slug=? where id=?");
+            $stmt = $this->conn->prepare("update news set title=?, content=?, preview_image_slug=? where id=?");
             $stmt->bindParam(1, $title);
             $stmt->bindParam(2, $content);
             $stmt->bindParam(3, $previewImage);
