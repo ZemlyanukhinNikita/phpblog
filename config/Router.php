@@ -7,8 +7,12 @@ class Router
     private function routing()
     {
         return $routes = [
+            '' => 'news/index',
+            'login' => 'auth/showLoginForm',
+            'login/authorize' => 'auth/authorize',
             'news/([0-9]+)' => 'news/show/$1',
-            'news' => 'news/index',
+            'addNew' => 'news/showCreateForm',
+            'create' => 'news/create',
         ];
     }
 
