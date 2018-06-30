@@ -8,10 +8,11 @@ class Router
     {
         return $routes = [
             '' => 'news/index',
-            'login' => 'auth/showLoginForm',
             'login/authorize' => 'auth/authorize',
+            'login' => 'auth/showLoginForm',
+            'logout' => 'auth/logout',
             'news/([0-9]+)' => 'news/show/$1',
-            'addNew' => 'news/showCreateForm',
+            'news/addNew' => 'news/showCreateForm',
             'news/editNew/([0-9]+)' => 'news/showEditForm/$1',
             'news/create' => 'news/create',
             'news/edit/([0-9]+)' => 'news/edit/$1',
