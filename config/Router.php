@@ -12,7 +12,9 @@ class Router
             'login/authorize' => 'auth/authorize',
             'news/([0-9]+)' => 'news/show/$1',
             'addNew' => 'news/showCreateForm',
-            'create' => 'news/create',
+            'news/editNew/([0-9]+)' => 'news/showEditForm/$1',
+            'news/create' => 'news/create',
+            'news/edit/([0-9]+)' => 'news/edit/$1',
         ];
     }
 
