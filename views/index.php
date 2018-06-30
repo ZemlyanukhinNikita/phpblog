@@ -1,12 +1,5 @@
 ﻿<?php require_once 'layouts/header.php' ?>
-<?php
-$weekAgo = date("Y-m-d H:i:s", mktime(date('h'), date('i'), date('s'), date('m'), date('d') - 7, date('Y')));
-$array = [];
-foreach ($newsList as $item) {
-    if ($item['created_at'] > $weekAgo)
-        $array[] = $item['created_at'];
-}
-?>
+
 <div class="wrapper">
     <div class="content">
         <?php foreach ($newsList as $item): ?>
@@ -15,7 +8,9 @@ foreach ($newsList as $item) {
                     <img src="<?php echo $item['preview_image_slug'] ?>" alt=""/>
                 <?php } ?>
                 <h3><a href="/news/<?php echo $item['id'] ?>"> <?php echo $item['title'] ?></a></h3>
-                <p><?php echo $item['content'] ?></p>
+                <p><?php
+                    $text = strip_tags($item['content']);
+                    echo substr($text,0,300) ?></p>
             </div>
         <?php endforeach; ?>
     </div>
