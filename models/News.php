@@ -22,7 +22,7 @@ class News
     {
         $news = [];
 
-        $stmt = $this->conn->query('select id, title, content, preview_image_slug, views from news');
+        $stmt = $this->conn->query('select * from news');
 
         $i = 0;
         while ($row = $stmt->fetch()) {
@@ -32,6 +32,8 @@ class News
             $news[$i]['content'] = $row['content'];
             $news[$i]['preview_image_slug'] = $row['preview_image_slug'];
             $news[$i]['views'] = $row['views'];
+            $news[$i]['created_at'] = $row['created_at'];
+            $news[$i]['updated_at'] = $row['updated_at'];
             $i++;
         }
         return $news;
