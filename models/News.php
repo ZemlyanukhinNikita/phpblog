@@ -22,10 +22,10 @@ class News
     {
         $news = [];
 
-        $query = $this->conn->query('select id, title, content, preview_image_slug, views from news');
+        $stmt = $this->conn->query('select id, title, content, preview_image_slug, views from news');
 
         $i = 0;
-        while ($row = $query->fetch()) {
+        while ($row = $stmt->fetch()) {
 
             $news[$i]['id'] = $row['id'];
             $news[$i]['title'] = $row['title'];
@@ -42,11 +42,36 @@ class News
         $id = intval($id);
 
         if ($id) {
-            $query = $this->conn->query('select id, title, content, preview_image_slug, views from news where id=' . $id);
-            $query->setFetchMode(\PDO::FETCH_ASSOC);
-            $newsItem = $query->fetch();
+            $stmt = $this->conn->prepare("select id, title, content, preview_image_slug, views from news where id = ?");
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+            $newsItem = $stmt->fetch();
             return $newsItem;
         }
+        return null;
+    }
+
+    private function replacingEmptyStringWithNull($value)
+    {
+        if ($value === '') {
+            return null;
+        }
+        return $value;
+    }
+
+
+    public function createNew($title, $content, $previewImage)
+    {
+
+        $previewImage = $this->replacingEmptyStringWithNull($previewImage);
+
+        $stmt = $this->conn->prepare("INSERT INTO news (title, content, preview_image_slug) VALUES (?, ?, ?)");
+        $stmt->bindParam(1, $title);
+        $stmt->bindParam(2, $content);
+        $stmt->bindParam(3, $previewImage);
+        $stmt->execute();
+
+        return true;
     }
 
 }
