@@ -36,6 +36,13 @@ class NewsController
         return true;
     }
 
+    public function showEditForm($id)
+    {
+        $itemNew = $this->newsModel->getNewById($id);
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/views/editForm.php';
+        return true;
+    }
+
     private function imageUpload()
     {
         $imageName = $_FILES['preview_image']['name'];
@@ -63,9 +70,22 @@ class NewsController
             $previewImage = $this->imageUpload();
         }
 
-        $itemNew = $this->newsModel->createNew($_POST['title'], $_POST['content'], $previewImage);
+        $itemNewId = $this->newsModel->createNew($_POST['title'], $_POST['content'], $previewImage);
 
-        header('Location:/');
+        header('Location:/news/'.$itemNewId);
+        return true;
+    }
+
+    public function edit($id)
+    {
+        $previewImage = null;
+        if ($_FILES['preview_image']['name']) {
+            $previewImage = $this->imageUpload();
+        }
+
+        $itemNew = $this->newsModel->editNew($id, $_POST['title'], $_POST['content'], $previewImage);
+
+        header('Location:/news/'.$id);
         return true;
     }
 }
