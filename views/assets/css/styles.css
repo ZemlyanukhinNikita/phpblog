@@ -56,6 +56,11 @@ a:hover {
     text-decoration:none;
     color:#333;
 }
+.textArea {
+    width: 800px;
+    height: 400px;
+    margin-left: 100px;
+}
 .wrapper {
     width:900px;
     margin:5px auto;
