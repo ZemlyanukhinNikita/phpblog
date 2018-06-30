@@ -1,7 +1,4 @@
-﻿<?php
-ini_set('display_errors',1);
-error_reporting(E_ALL);?>
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
