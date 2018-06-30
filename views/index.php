@@ -46,7 +46,7 @@
     </ul>
 
     <div class="clear"></div>
-    <?php if (isset($_SESSION['logged_user'])) { ?>
+    <?php if ($_SESSION['logged_user']['isAdmin'] == 1) { ?>
         <h2><a href="/news/addNew">Добавить новость</a></h2>
     <?php } ?>
 </div>

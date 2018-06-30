@@ -5,6 +5,6 @@
 <?php if ($itemNew['preview_image_slug']) { ?>
     <img src="<?php echo $itemNew['preview_image_slug'] ?>" alt=""/>
 <?php } ?>
-<?php if (isset($_SESSION['logged_user'])) { ?>
+<?php if ($_SESSION['logged_user']['isAdmin'] == 1) { ?>
     <a href="/news/editNew/<?php echo $itemNew['id'] ?>">Редактировать новость</a>
 <?php } ?>
