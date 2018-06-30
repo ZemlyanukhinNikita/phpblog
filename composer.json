@@ -7,6 +7,7 @@
         }
     ],
     "require": {
-        "robmorgan/phinx": "^0.10.3"
+        "robmorgan/phinx": "^0.10.3",
+        "fzaninotto/faker": "^1.7"
     }
 }
