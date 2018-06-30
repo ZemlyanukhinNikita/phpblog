@@ -21,7 +21,8 @@ class Database
         $username = $connection['username'];
         $password = $connection['password'];
         $dbname = $connection['dbname'];
-        $dsn = "mysql:host=$host;dbname=$dbname";
+        $charset = $connection['charset'];
+        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
         try {
             $conn = new PDO($dsn, $username, $password);
