@@ -51,6 +51,18 @@ class News
         return null;
     }
 
+    public function updateViews($id)
+    {
+        $id = intval($id);
+
+        if ($id) {
+            $stmt = $this->conn->prepare("UPDATE news set views = views+1 where id=?");
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+        }
+        return null;
+    }
+
     private function replacingEmptyStringWithNull($value)
     {
         if ($value === '') {
@@ -76,17 +88,21 @@ class News
 
     public function editNew($id, $title, $content, $previewImage)
     {
+        $id = intval($id);
+        if ($id) {
 
-        $previewImage = $this->replacingEmptyStringWithNull($previewImage);
+            $previewImage = $this->replacingEmptyStringWithNull($previewImage);
 
-        $stmt = $this->conn->prepare("UPDATE news set title=?, content=?, preview_image_slug=? where id=?");
-        $stmt->bindParam(1, $title);
-        $stmt->bindParam(2, $content);
-        $stmt->bindParam(3, $previewImage);
-        $stmt->bindParam(4, $id);
-        $stmt->execute();
+            $stmt = $this->conn->prepare("UPDATE news set title=?, content=?, preview_image_slug=? where id=?");
+            $stmt->bindParam(1, $title);
+            $stmt->bindParam(2, $content);
+            $stmt->bindParam(3, $previewImage);
+            $stmt->bindParam(4, $id);
+            $stmt->execute();
 
-        return true;
+            return true;
+        }
+        return null;
     }
 
 }
