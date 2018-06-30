@@ -3,10 +3,12 @@
 namespace controllers;
 
 use models\News;
+use models\User;
 
 class NewsController
 {
     private $newsModel;
+    private $userModel;
 
     /**
      * NewsController constructor.
@@ -14,13 +16,13 @@ class NewsController
     public function __construct()
     {
         $this->newsModel = new News();
+        $this->userModel = new User();
     }
 
     public function index()
     {
         $newsList = $this->newsModel->getAllNews();
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/index.php';
-        return true;
     }
 
     public function show($id)
@@ -28,20 +30,23 @@ class NewsController
         $itemNew = $this->newsModel->getNewById($id);
         $this->newsModel->updateViews($id);
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/itemNew.php';
-        return true;
     }
 
     public function showCreateForm()
     {
+        if (!$this->userModel->isAdmin()) {
+            header('Location:/');
+        }
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
-        return true;
     }
 
     public function showEditForm($id)
     {
+        if (!$this->userModel->isAdmin()) {
+            header('Location:/');
+        }
         $itemNew = $this->newsModel->getNewById($id);
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/editForm.php';
-        return true;
     }
 
     private function imageUpload()
@@ -65,28 +70,35 @@ class NewsController
 
     public function create()
     {
+        if (!$this->userModel->isAdmin()) {
+            header('Location:/');
+        }
         //todo check form fields, and validate image
         $previewImage = null;
         if ($_FILES['preview_image']['name']) {
             $previewImage = $this->imageUpload();
         }
+        $message = [];
+        if (empty($_POST['title'])) {
+            $message[] = 'Пустая строка';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
+        }
 
         $itemNewId = $this->newsModel->createNew($_POST['title'], $_POST['content'], $previewImage);
-
         header('Location:/news/' . $itemNewId);
-        return true;
     }
 
     public function edit($id)
     {
+        if (!$this->userModel->isAdmin()) {
+            header('Location:/');
+        }
         $previewImage = null;
         if ($_FILES['preview_image']['name']) {
             $previewImage = $this->imageUpload();
         }
 
-        $itemNew = $this->newsModel->editNew($id, $_POST['title'], $_POST['content'], $previewImage);
-
+        $this->newsModel->editNew($id, $_POST['title'], $_POST['content'], $previewImage);
         header('Location:/news/' . $id);
-        return true;
     }
 }
