@@ -25,41 +25,42 @@ class AuthController
     private function authenticate($login, $password)
     {
         $user = $this->userModel->getUserByLogin($login);
+
         $message = '';
-        if (!$user) {
+        if ($user['login'] == $login && $user['password'] == $password) {
+            session_start();
+            $_SESSION['logged_user'] = $user;
+            return true;
+        } elseif ($login != $user['login']) {
             $message = 'Неверный логин';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/views/loginForm.php';
-        } elseif ($password != $user['password']) {
+        } else {
             $message = 'Неверный пароль';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/views/loginForm.php';
         }
-
-        session_start();
-        $_SESSION['logged_user'] = $user;
-        return true;
     }
 
     public function authorize()
     {
         $login = $_POST['login'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']);
+
         if (empty($login) || empty($password)) {
             $message = 'Заполните обязательные поля';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/views/loginForm.php';
-            return true;
         }
-        $this->authenticate($login, $password);
-
-        header('Location:/');
+        if ($this->authenticate($login, $password)) {
+            header('Location:/');
+        }
     }
 
     public function logout()
     {
         session_start();
-        if(isset($_SESSION['logged_user'])){
-        unset($_SESSION['logged_user']);
-        session_destroy();
-        header('Location:/');
+        if (isset($_SESSION['logged_user'])) {
+            unset($_SESSION['logged_user']);
+            session_destroy();
+            header('Location:/');
         }
         return null;
     }
