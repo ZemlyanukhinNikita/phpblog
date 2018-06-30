@@ -1,4 +1,5 @@
-﻿<?php require_once 'layouts/header.php' ?>
+﻿<?php session_start(); ?>
+<?php require_once 'layouts/header.php' ?>
 
 <div class="wrapper">
     <div class="content">
@@ -10,7 +11,7 @@
                 <h3><a href="/news/<?php echo $item['id'] ?>"> <?php echo $item['title'] ?></a></h3>
                 <p><?php
                     $text = strip_tags($item['content']);
-                    echo substr($text,0,300) ?></p>
+                    echo substr($text, 0, 300) ?></p>
             </div>
         <?php endforeach; ?>
     </div>
@@ -45,7 +46,9 @@
     </ul>
 
     <div class="clear"></div>
-    <a href="/addNew">Добавить новость</a>
+    <?php if (isset($_SESSION['logged_user'])) { ?>
+        <h2><a href="/news/addNew">Добавить новость</a></h2>
+    <?php } ?>
 </div>
 </body>
 </html>
