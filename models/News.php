@@ -85,7 +85,7 @@ class News
         $stmt->bindParam(3, $previewImage);
         $stmt->execute();
 
-        return $this->conn->lastInsertId();;
+        return $this->conn->lastInsertId();
     }
 
     public function editNew($id, $title, $content, $previewImage)
