@@ -12,7 +12,7 @@ class AddFieldViewsToTableNews extends AbstractMigration
     {
         $news = $this->table('news');
         $news
-            ->addColumn('views', 'integer', ['null' => true])
+            ->addColumn('views', 'integer', ['default' => 0])
             ->save();
     }
 }
