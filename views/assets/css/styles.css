@@ -1,84 +1,98 @@
 body {
     background: #ccc;
-    margin:0;
-    padding:0;
-    text-align:justify;
-    font-family:"Trebuchet MS", Helvetica, sans-serif;
-    font-size:12px;
-    color:#333;
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 12px;
+    color: #333;
 }
-h1 {
-    padding:25px 0 0 30px;
-    color:#fff;
-    font-size:40px;
-    text-decoration:none;
-    line-height:36px;
-    margin:0;
-    font-weight:lighter;
-}
-h1 a {
-    color:#fff;
-    text-decoration:none;
-}
-h1 a:hover {
-    color:#222;
-    text-decoration:none;
-}
-h2 {
-    font-size:25px;
-    display:inline;
-}
-h3 {
-    font-size:17px;
-    color:#be4204;
-    display:inline;
-    font-weight:lighter;
-}
-p, ul {
-    line-height:22px;
-}
-ul {
-    margin-left:0;
-    padding-left:0;
-    list-style:none;
-}
-ul li {
-    width:200px;
-    padding:2px 0 5px 0;
-    font-size:14px;
 
+h1 {
+    padding: 25px 0 0 30px;
+    color: #fff;
+    font-size: 40px;
+    text-decoration: none;
+    line-height: 36px;
+    margin: 0;
+    font-weight: lighter;
 }
-a {
-    color:#697e13;
+
+h1 a {
+    color: #fff;
     text-decoration: none;
 }
-a:hover {
-    text-decoration:none;
-    color:#333;
+
+h1 a:hover {
+    color: #222;
+    text-decoration: none;
 }
+
+h2 {
+    font-size: 25px;
+    display: inline;
+}
+
+h3 {
+    font-size: 17px;
+    color: #be4204;
+    display: inline;
+    font-weight: lighter;
+}
+
+p, ul {
+    line-height: 22px;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+ul li {
+    width: 200px;
+    padding: 2px 0 5px 0;
+    font-size: 14px;
+
+}
+
+a {
+    color: #697e13;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #333;
+}
+
 .textArea {
     width: 800px;
     height: 300px;
 }
+
 .wrapper {
-    width:900px;
-    margin:5px auto;
-    background:#ffffcc;
+    width: 900px;
+    margin: 5px auto;
+    background: #ffffcc;
 }
+
 .header {
-    width:900px;
-    height:98px;
-    margin:0 auto;
+    width: 900px;
+    height: 98px;
+    margin: 0 auto;
     background: #999;
 
 }
+
 .right {
-    float:left;
-    width:220px;
-    margin:2px 0 0 10px;
-    padding:5px;
-    background:#fff;
-    border:1px solid #ccc;
+    float: left;
+    width: 220px;
+    margin: 2px 0 0 10px;
+    padding: 5px;
+    background: #fff;
+    border: 1px solid #ccc;
 }
 
 .posts {
@@ -86,47 +100,51 @@ a:hover {
     margin-top: 10px;
     padding-right: 130px;
 }
+
 .content {
-    float:left;
-    width:630px;
-    margin:0 0 10px 5px;
-    padding:6px;
+    float: left;
+    width: 630px;
+    margin: 0 0 10px 5px;
+    padding: 6px;
 }
+
 .itemNew {
-    width:615px;
-    margin:0 0 15px 0;
-    padding:10px;
-    border:1px solid #ccc;
-    background:#fff;
-    font-size:14px;
-    color:#555;
+    width: 615px;
+    margin: 0 0 15px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: 14px;
+    color: #555;
 }
+
 .content .itemNew img {
-    width:180px;
-    height:120px;
-    border:1px solid #669966;
-    margin:5px;
+    width: 180px;
+    height: 120px;
+    border: 1px solid #669966;
+    margin: 5px;
 }
+
 .addNew a {
-    color:#be4204;
+    color: #be4204;
 }
 
 .addNew a:hover {
-    color:black;
+    color: black;
 }
 
 .clear {
-    clear:both;
-    height:0
+    clear: both;
+    height: 0
 }
 
 /*Кнопка войти*/
 .login {
-    float:right;
+    float: right;
 }
 
 .content img {
-    float:left;
-    margin:8px;
-    border:2px solid #ccc;
+    float: left;
+    margin: 8px;
+    border: 2px solid #ccc;
 }
