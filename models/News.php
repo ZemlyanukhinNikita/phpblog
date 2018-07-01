@@ -67,9 +67,6 @@ class News
 
     public function createNew($title, $content, $previewImage)
     {
-
-        $previewImage = $this->replacingEmptyStringWithNull($previewImage);
-
         $stmt = $this->conn->prepare("insert into news (title, content, preview_image_slug) values (?, ?, ?)");
         $stmt->bindParam(1, $title);
         $stmt->bindParam(2, $content);
