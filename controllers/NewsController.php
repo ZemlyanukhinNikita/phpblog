@@ -75,14 +75,14 @@ class NewsController
             header('Location:/');
         }
 
-        if ($this->validateFields()) {
+        if ($postData = $this->validateFields()) {
 
             $previewImage = null;
             if ($_FILES['preview_image']['name']) {
                 $previewImage = $this->imageUpload();
             }
 
-            $itemNewId = $this->newsModel->createNew($_POST['title'], $_POST['content'], $previewImage);
+            $itemNewId = $this->newsModel->createNew($postData['title'], $postData['content'], $previewImage);
             header('Location:/news/' . $itemNewId);
         } else {
             $errorMessage = 'Заполните обязательные поля';
@@ -96,14 +96,14 @@ class NewsController
         if (!$this->userModel->isAdmin()) {
             header('Location:/');
         }
-        if ($this->validateFields()) {
+        if ($postData = $this->validateFields()) {
 
             $previewImage = null;
             if ($_FILES['preview_image']['name']) {
                 $previewImage = $this->imageUpload();
             }
 
-            $this->newsModel->editNew($id, $_POST['title'], $_POST['content'], $previewImage);
+            $this->newsModel->editNew($id, $postData['title'], $postData['content'], $previewImage);
             header('Location:/news/' . $id);
         } else {
             $errorMessage = 'Заполните обязательные поля';
@@ -113,9 +113,12 @@ class NewsController
 
     private function validateFields()
     {
-        if (empty($_POST['title']) || empty($_POST['content'])) {
+        $title = strip_tags($_POST['title']);
+        $content = strip_tags($_POST['content']);
+        $data = ['title' => $title,'content' => $content];
+        if (empty($title) || empty($content)) {
             return false;
         }
-        return true;
+        return $data;
     }
 }
