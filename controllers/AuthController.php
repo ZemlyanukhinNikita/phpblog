@@ -17,11 +17,21 @@ class AuthController
         $this->userModel = new User();
     }
 
+    /**
+     * Метод который возвращает форму для авторизации пользователя
+     */
     public function showLoginForm()
     {
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/loginForm.php';
     }
 
+    /**
+     * Метод аутентифицирует пользователя и записывает его в сессиию,
+     * если логин и пароль совпадают с логином и паролем этого пользователя в базе данных
+     * @param $login
+     * @param $password
+     * @return bool
+     */
     private function authenticate($login, $password)
     {
         $user = $this->userModel->getUserByLogin($login);
@@ -40,6 +50,10 @@ class AuthController
         }
     }
 
+    /**
+     * Метод редиректит пользовтеля на главную, если он ввел правильные логин и пароль
+     * если что либо не ввел, возвращается форма авторизации
+     */
     public function authorize()
     {
         $login = $_POST['login'];
@@ -53,6 +67,10 @@ class AuthController
         }
     }
 
+    /**
+     * Метод разлогирования пользователя
+     * @return null
+     */
     public function logout()
     {
         session_start();
