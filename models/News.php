@@ -65,15 +65,6 @@ class News
         return null;
     }
 
-    private function replacingEmptyStringWithNull($value)
-    {
-        if ($value === '') {
-            return null;
-        }
-        return $value;
-    }
-
-
     public function createNew($title, $content, $previewImage)
     {
 
@@ -93,16 +84,20 @@ class News
         $id = intval($id);
         if ($id) {
 
-            $previewImage = $this->replacingEmptyStringWithNull($previewImage);
-
-            $stmt = $this->conn->prepare("update news set title=?, content=?, preview_image_slug=? where id=?");
-            $stmt->bindParam(1, $title);
-            $stmt->bindParam(2, $content);
-            $stmt->bindParam(3, $previewImage);
-            $stmt->bindParam(4, $id);
-            $stmt->execute();
-
-            return true;
+            if ($previewImage) {
+                $stmt = $this->conn->prepare("update news set title=?, content=?, preview_image_slug=? where id=?");
+                $stmt->bindParam(1, $title);
+                $stmt->bindParam(2, $content);
+                $stmt->bindParam(3, $previewImage);
+                $stmt->bindParam(4, $id);
+                $stmt->execute();
+            } else {
+                $stmt = $this->conn->prepare("update news set title=?, content=? where id=?");
+                $stmt->bindParam(1, $title);
+                $stmt->bindParam(2, $content);
+                $stmt->bindParam(3, $id);
+                $stmt->execute();
+            }
         }
         return null;
     }
