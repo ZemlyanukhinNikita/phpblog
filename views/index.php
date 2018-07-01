@@ -2,7 +2,11 @@
 <?php require_once 'layouts/header.php' ?>
 
 <div class="wrapper">
+
     <div class="content">
+        <?php if ($_SESSION['logged_user']['isAdmin'] == 1) { ?>
+            <span class="addNew"><h3><a href="/news/addNew">Добавить новость</a></h3></span>
+        <?php } ?>
         <?php foreach ($newsList as $item): ?>
             <div class="itemNew">
                 <?php if ($item['preview_image_slug']) { ?>
@@ -15,9 +19,8 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <div class="posts">
-        <h3>Посты недели </h3>
-    </div>
+    <div class="weekPosts">
+        <span class="posts"><h3>Посты недели </h3></span>
     <ul>
         <?php
         //берем дату ровно неделю назад
@@ -44,11 +47,9 @@
             </div>
         <?php endforeach; ?>
     </ul>
+    </div>
 
     <div class="clear"></div>
-    <?php if ($_SESSION['logged_user']['isAdmin'] == 1) { ?>
-        <h2><a href="/news/addNew">Добавить новость</a></h2>
-    <?php } ?>
 </div>
 </body>
 </html>
