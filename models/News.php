@@ -18,6 +18,10 @@ class News
         $this->conn = $db->getConnection();
     }
 
+    /**
+     * Метод получения всех новостей из базы данных
+     * @return array
+     */
     public function getAllNews()
     {
         $news = [];
@@ -39,6 +43,11 @@ class News
         return $news;
     }
 
+    /**
+     * Метод получения одной новости по $id
+     * @param $id
+     * @return mixed|null
+     */
     public function getNewById($id)
     {
         $id = intval($id);
@@ -53,6 +62,11 @@ class News
         return null;
     }
 
+    /**
+     * Метод обновления просмотров у новости
+     * @param $id
+     * @return null
+     */
     public function updateViews($id)
     {
         $id = intval($id);
@@ -65,6 +79,13 @@ class News
         return null;
     }
 
+    /**
+     * Метод создания новости, возвращает $id только что соданной новости
+     * @param $title
+     * @param $content
+     * @param $previewImage
+     * @return string
+     */
     public function createNew($title, $content, $previewImage)
     {
         $stmt = $this->conn->prepare("insert into news (title, content, preview_image_slug) values (?, ?, ?)");
@@ -76,7 +97,15 @@ class News
         return $this->conn->lastInsertId();
     }
 
-    public function editNew($id, $title, $content, $previewImage)
+    /**
+     * Метод обовления новости
+     * @param $id
+     * @param $title
+     * @param $content
+     * @param $previewImage
+     * @return null
+     */
+    public function updateNew($id, $title, $content, $previewImage)
     {
         $id = intval($id);
         if ($id) {
