@@ -133,7 +133,7 @@ class NewsController
                 $previewImage = $this->imageUpload();
             }
 
-            $this->newsModel->editNew($id, $postData['title'], $postData['content'], $previewImage);
+            $this->newsModel->updateNew($id, $postData['title'], $postData['content'], $previewImage);
             header('Location:/news/' . $id);
         } else {
             $errorMessage = 'Заполните обязательные поля';
