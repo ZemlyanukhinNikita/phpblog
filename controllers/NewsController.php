@@ -74,6 +74,8 @@ class NewsController
      */
     private function imageUpload()
     {
+        //todo render the method of loading the image into a separate ImageService
+        //todo add the removal of the picture from the server, do the validation
         $imageName = $_FILES['preview_image']['name'];
 
         if ($imageName) {
