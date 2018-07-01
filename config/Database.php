@@ -13,7 +13,7 @@ class Database
     public function __construct()
     {
 
-        require 'config.php';
+        require_once 'config.php';
 
         $conn = null;
 
