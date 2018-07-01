@@ -19,12 +19,20 @@ class NewsController
         $this->userModel = new User();
     }
 
+    /**
+     * Метод, который передает в вид 'index.php' все новости
+     */
     public function index()
     {
         $newsList = $this->newsModel->getAllNews();
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/index.php';
     }
 
+    /**
+     * Метод, который передает в вид 'itemNew.php' новость
+     * с идентификатором $id
+     * @param $id
+     */
     public function show($id)
     {
         $itemNew = $this->newsModel->getNewById($id);
@@ -32,6 +40,10 @@ class NewsController
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/itemNew.php';
     }
 
+    /**
+     * Метод возвращает форму создания статьи,
+     * если пользователь является администратором
+     */
     public function showCreateForm()
     {
         if (!$this->userModel->isAdmin()) {
@@ -40,6 +52,11 @@ class NewsController
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
     }
 
+    /**
+     * Метод возвращает форму редактирования статьи с идентификатором $id,
+     * если пользователь является администратором
+     * @param $id
+     */
     public function showEditForm($id)
     {
         if (!$this->userModel->isAdmin()) {
@@ -49,6 +66,12 @@ class NewsController
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/editForm.php';
     }
 
+    /**
+     * Метод загрузки картинки
+     * возвращает путь до картинки, если успешно загружена
+     * возврашает null если не удалось загрузить
+     * @return null|string
+     */
     private function imageUpload()
     {
         $imageName = $_FILES['preview_image']['name'];
@@ -69,6 +92,9 @@ class NewsController
         }
     }
 
+    /**
+     * Метод создания новости
+     */
     public function create()
     {
         if (!$this->userModel->isAdmin()) {
@@ -91,6 +117,10 @@ class NewsController
 
     }
 
+    /**
+     * Метод редактирования новости с идентификатором $id
+     * @param $id
+     */
     public function edit($id)
     {
         if (!$this->userModel->isAdmin()) {
@@ -111,6 +141,13 @@ class NewsController
         }
     }
 
+    /**
+     * Метод валидации полей title и content
+     * убирает html теги
+     * возвращает false если хотя бы одно поле не заполнено
+     * возвращает массив с элементами title и content, если оба поля заполнены
+     * @return array|bool
+     */
     private function validateFields()
     {
         $title = strip_tags($_POST['title']);
