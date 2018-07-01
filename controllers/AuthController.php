@@ -36,16 +36,16 @@ class AuthController
     {
         $user = $this->userModel->getUserByLogin($login);
 
-        $message = '';
+        $errorMessage = '';
         if ($user['login'] == $login && $user['password'] == $password) {
             session_start();
             $_SESSION['logged_user'] = $user;
             return true;
         } elseif ($login != $user['login']) {
-            $message = 'Неверный логин';
+            $errorMessage = 'Неверный логин';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/views/loginForm.php';
         } else {
-            $message = 'Неверный пароль';
+            $errorMessage = 'Неверный пароль';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/views/loginForm.php';
         }
     }
