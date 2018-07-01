@@ -48,8 +48,7 @@ class AuthController
         if (empty($login) || empty($password)) {
             $message = 'Заполните обязательные поля';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/views/loginForm.php';
-        }
-        if ($this->authenticate($login, $password)) {
+        } elseif ($this->authenticate($login, $password)) {
             header('Location:/');
         }
     }
