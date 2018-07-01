@@ -16,17 +16,20 @@ class NewsSeeder extends AbstractSeed
 
         $faker = Faker\Factory::create();
         $data = [];
+
         for ($i = 0; $i < 5; $i++) {
             $data[] = [
-                'title'      => $faker->text(40),
+                'title'      => $faker->text(40).' Топ - '.$i,
                 'content'      => $faker->realText(400),
                 'preview_image_slug' => $faker->imageUrl('180','120'),
+                'views' => 10-$i,
                 'created_at'       => date('Y-m-d H:i:s'),
             ];
 
             $data[] = [
-                'title'      => $faker->text(40),
+                'title'      => $faker->text(20).' Топ - '.(5+$i),
                 'content'      => $faker->realText(400),
+                'views' => 10-(5+$i),
                 'created_at'       => date('Y-m-d H:i:s'),
             ];
         }
