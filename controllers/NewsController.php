@@ -154,7 +154,7 @@ class NewsController
     {
         $title = strip_tags($_POST['title']);
         $content = strip_tags($_POST['content']);
-        $data = ['title' => $title,'content' => $content];
+        $data = ['title' => $title, 'content' => $content];
         if (empty($title) || empty($content)) {
             return false;
         }

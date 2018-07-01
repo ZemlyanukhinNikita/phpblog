@@ -11,7 +11,7 @@ class ChangeContentFieldToText extends AbstractMigration
     public function up()
     {
         $news = $this->table('news');
-        $news->changeColumn('content','text')->save();
+        $news->changeColumn('content', 'text')->save();
     }
 
     /**
@@ -20,6 +20,6 @@ class ChangeContentFieldToText extends AbstractMigration
     public function down()
     {
         $news = $this->table('news');
-        $news->changeColumn('content','string')->save();
+        $news->changeColumn('content', 'string')->save();
     }
 }

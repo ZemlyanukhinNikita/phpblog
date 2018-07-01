@@ -15,15 +15,15 @@ class UsersSeeder extends AbstractSeed
         $users->truncate();
 
         $data = [];
-            $data[] = [
-                'login'      => 'admin',
-                'password'      => md5('123456'),
-                'isAdmin' => 1
-            ];
+        $data[] = [
+            'login' => 'admin',
+            'password' => md5('123456'),
+            'isAdmin' => 1
+        ];
 
         $data[] = [
-            'login'      => 'mortal',
-            'password'      => md5('qwerty'),
+            'login' => 'mortal',
+            'password' => md5('qwerty'),
             'isAdmin' => 0
         ];
         $users->insert($data)->save();
