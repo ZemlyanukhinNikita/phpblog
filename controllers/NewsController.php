@@ -52,13 +52,14 @@ class NewsController
     private function imageUpload()
     {
         $imageName = $_FILES['preview_image']['name'];
+
         if ($imageName) {
 
             if ($_FILES['preview_image']['error'] == 0) {
 
                 $tmpName = $_FILES['preview_image']['tmp_name'];
                 $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-                $pathName = '/images/' . md5($imageName) . '.' . $ext;
+                $pathName = '/images/' . time() . md5($imageName) . '.' . $ext;
                 if (copy($tmpName, $_SERVER['DOCUMENT_ROOT'] . $pathName)) {
                     return $pathName;
                 } else {
@@ -73,19 +74,21 @@ class NewsController
         if (!$this->userModel->isAdmin()) {
             header('Location:/');
         }
-        //todo check form fields, and validate image
-        $previewImage = null;
-        if ($_FILES['preview_image']['name']) {
-            $previewImage = $this->imageUpload();
-        }
-        $message = [];
-        if (empty($_POST['title'])) {
-            $message[] = 'Пустая строка';
+
+        if ($this->validateFields()) {
+
+            $previewImage = null;
+            if ($_FILES['preview_image']['name']) {
+                $previewImage = $this->imageUpload();
+            }
+
+            $itemNewId = $this->newsModel->createNew($_POST['title'], $_POST['content'], $previewImage);
+            header('Location:/news/' . $itemNewId);
+        } else {
+            $errorMessage = 'Заполните обязательные поля';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
         }
 
-        $itemNewId = $this->newsModel->createNew($_POST['title'], $_POST['content'], $previewImage);
-        header('Location:/news/' . $itemNewId);
     }
 
     public function edit($id)
@@ -93,12 +96,26 @@ class NewsController
         if (!$this->userModel->isAdmin()) {
             header('Location:/');
         }
-        $previewImage = null;
-        if ($_FILES['preview_image']['name']) {
-            $previewImage = $this->imageUpload();
-        }
+        if ($this->validateFields()) {
 
-        $this->newsModel->editNew($id, $_POST['title'], $_POST['content'], $previewImage);
-        header('Location:/news/' . $id);
+            $previewImage = null;
+            if ($_FILES['preview_image']['name']) {
+                $previewImage = $this->imageUpload();
+            }
+
+            $this->newsModel->editNew($id, $_POST['title'], $_POST['content'], $previewImage);
+            header('Location:/news/' . $id);
+        } else {
+            $errorMessage = 'Заполните обязательные поля';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
+        }
+    }
+
+    private function validateFields()
+    {
+        if (empty($_POST['title']) || empty($_POST['content'])) {
+            return false;
+        }
+        return true;
     }
 }
