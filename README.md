@@ -18,8 +18,10 @@
     - в файле ``config.php`` установить свои переменные подключения к бд
     - в корне проекта в файле ``phinx.yml`` в пункте development: также установить свои переменные подкючения к бд
   - в корне папки с проектом выполнить команды:
-    - ``php vendor/bin/phinx migrate``
-    - ``php vendor/bin/phinx seed:run``
+    - ``php vendor/bin/phinx migrate`` (миграции)
+    - ``php vendor/bin/phinx seed:run`` (сиды)
+    - ``sudo chmod 777 -R images/`` (для загрузки картинки на сервер)
+
     
   
 
