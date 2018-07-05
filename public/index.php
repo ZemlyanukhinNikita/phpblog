@@ -1,9 +1,10 @@
 <?php
-session_start();
 
 use config\Router;
 
-require_once 'config/Loader.php';
+session_start();
+
+require_once '../config/Loader.php';
 
 $loader = new Loader();
 
