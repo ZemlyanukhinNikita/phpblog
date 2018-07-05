@@ -78,20 +78,22 @@ class NewsController
         //todo add the removal of the picture from the server, do the validation
         $imageName = $_FILES['preview_image']['name'];
 
-        if ($imageName) {
-
-            if ($_FILES['preview_image']['error'] == 0) {
-
-                $tmpName = $_FILES['preview_image']['tmp_name'];
-                $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-                $pathName = '/images/' . time() . md5($imageName) . '.' . $ext;
-                if (copy($tmpName, $_SERVER['DOCUMENT_ROOT'] . $pathName)) {
-                    return $pathName;
-                } else {
-                    return null;
-                }
-            }
+        if (!$imageName) {
+            return null;
         }
+
+        if ($_FILES['preview_image']['error'] != 0) {
+            return null;
+        }
+
+        $tmpName = $_FILES['preview_image']['tmp_name'];
+        $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+        $pathName = '/images/' . time() . md5($imageName) . '.' . $ext;
+
+        if (copy($tmpName, $_SERVER['DOCUMENT_ROOT'] . $pathName)) {
+            return $pathName;
+        }
+        return null;
     }
 
     /**
@@ -103,20 +105,19 @@ class NewsController
             header('Location:/');
         }
 
-        if ($postData = $this->validateFields()) {
+        if (!$this->isValidateFields()) {
+            $errorMessage = 'Заполните обязательные поля';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
+        } else {
+            $postData = $this->filteringData();
 
             $previewImage = null;
             if ($_FILES['preview_image']['name']) {
                 $previewImage = $this->imageUpload();
             }
-
             $itemNewId = $this->newsModel->createNew($postData['title'], $postData['content'], $previewImage);
             header('Location:/news/' . $itemNewId);
-        } else {
-            $errorMessage = 'Заполните обязательные поля';
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
         }
-
     }
 
     /**
@@ -128,18 +129,20 @@ class NewsController
         if (!$this->userModel->isAdmin()) {
             header('Location:/');
         }
-        if ($postData = $this->validateFields()) {
+
+        if (!$this->isValidateFields()) {
+            $errorMessage = 'Заполните обязательные поля';
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
+        } else {
+            $postData = $this->filteringData();
 
             $previewImage = null;
+
             if ($_FILES['preview_image']['name']) {
                 $previewImage = $this->imageUpload();
             }
-
             $this->newsModel->updateNew($id, $postData['title'], $postData['content'], $previewImage);
             header('Location:/news/' . $id);
-        } else {
-            $errorMessage = 'Заполните обязательные поля';
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/views/createForm.php';
         }
     }
 
@@ -150,14 +153,18 @@ class NewsController
      * возвращает массив с элементами title и content, если оба поля заполнены
      * @return array|bool
      */
-    private function validateFields()
+    private function isValidateFields()
+    {
+        if (empty($_POST['title']) || empty($_POST['content'])) {
+            return false;
+        }
+        return true;
+    }
+
+    private function filteringData()
     {
         $title = strip_tags($_POST['title']);
         $content = htmlspecialchars($_POST['content']);
-        $data = ['title' => $title, 'content' => $content];
-        if (empty($title) || empty($content)) {
-            return false;
-        }
-        return $data;
+        return ['title' => $title, 'content' => $content];
     }
 }
