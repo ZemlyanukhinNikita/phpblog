@@ -49,7 +49,9 @@ class News extends Model
         $id = intval($id);
 
         if ($id) {
-            $stmt = $this->conn->prepare("select id, title, content, preview_image_slug, views from news where id = ?");
+            $stmt = $this->conn->prepare("select id, title, content, preview_image_slug, views
+                                                    from news
+                                                    where id = ?");
             $stmt->bindParam(1, $id);
             $stmt->execute();
             $newsItem = $stmt->fetch();
@@ -84,7 +86,8 @@ class News extends Model
      */
     public function createNew($title, $content, $previewImage)
     {
-        $stmt = $this->conn->prepare("insert into news (title, content, preview_image_slug) values (?, ?, ?)");
+        $stmt = $this->conn->prepare("insert into news (title, content, preview_image_slug)
+                                                values (?, ?, ?)");
         $stmt->bindParam(1, $title);
         $stmt->bindParam(2, $content);
         $stmt->bindParam(3, $previewImage);
@@ -107,7 +110,9 @@ class News extends Model
         if ($id) {
 
             if ($previewImage) {
-                $stmt = $this->conn->prepare("update news set title=?, content=?, preview_image_slug=? where id=?");
+                $stmt = $this->conn->prepare("update news
+                                                        set title=?, content=?, preview_image_slug=?
+                                                        where id=?");
                 $stmt->bindParam(1, $title);
                 $stmt->bindParam(2, $content);
                 $stmt->bindParam(3, $previewImage);
