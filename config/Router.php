@@ -2,12 +2,12 @@
 
 namespace config;
 
+
 class Router
 {
     private function routing()
     {
         return $routes = [
-            '' => 'news/index',
             'login/authorize' => 'auth/authorize',
             'login' => 'auth/showLoginForm',
             'logout' => 'auth/logout',
@@ -16,6 +16,7 @@ class Router
             'news/editNew/([0-9]+)' => 'news/showEditForm/$1',
             'news/create' => 'news/create',
             'news/edit/([0-9]+)' => 'news/edit/$1',
+            '' => 'news/index',
         ];
     }
 
@@ -38,13 +39,16 @@ class Router
                 $controllerName = 'controllers\\' . ucfirst($controllerName);
 
                 $actionName = array_shift($segments);
-
                 $parameters = $segments;
 
                 $controllerObject = new $controllerName;
-                $result = call_user_func_array([$controllerObject, $actionName], $parameters);
 
-                if ($result !== null) {
+                $result =null;
+                if(method_exists($controllerObject, $actionName)) {
+                    $result = call_user_func_array([$controllerObject, $actionName], $parameters);
+                }
+
+                if ($result != null) {
                     break;
                 }
             }
