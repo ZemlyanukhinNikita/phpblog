@@ -37,8 +37,7 @@ class AuthController
         $user = $this->userModel->getUserByLogin($login);
 
         $errorMessage = '';
-        if ($user['login'] == $login && $user['password'] == $password) {
-            session_start();
+        if (($user['login'] == $login) && password_verify($password, $user['password'])) {
             $_SESSION['logged_user'] = $user;
             return true;
         } elseif ($login != $user['login']) {
@@ -57,7 +56,7 @@ class AuthController
     public function authorize()
     {
         $login = $_POST['login'];
-        $password = md5($_POST['password']);
+        $password = $_POST['password'];
 
         if (empty($login) || empty($password)) {
             $message = 'Заполните обязательные поля';
@@ -73,7 +72,6 @@ class AuthController
      */
     public function logout()
     {
-        session_start();
         if (isset($_SESSION['logged_user'])) {
             unset($_SESSION['logged_user']);
             session_destroy();

@@ -14,7 +14,7 @@ class CreateUsersTable extends AbstractMigration
         $users = $this->table('users');
         $users
             ->addColumn('login', 'string', ['limit' => 20])
-            ->addColumn('password', 'string', ['limit' => 40])
+            ->addColumn('password', 'string')
             ->addColumn('isAdmin', 'boolean', ['default' => false])
             ->addIndex(['login'], ['unique' => true])
             ->save();

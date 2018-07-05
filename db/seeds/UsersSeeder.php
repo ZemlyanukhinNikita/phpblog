@@ -17,13 +17,13 @@ class UsersSeeder extends AbstractSeed
         $data = [];
         $data[] = [
             'login' => 'admin',
-            'password' => md5('123456'),
+            'password' => password_hash('123456', PASSWORD_DEFAULT),
             'isAdmin' => 1
         ];
 
         $data[] = [
             'login' => 'mortal',
-            'password' => md5('qwerty'),
+            'password' => password_hash('qwerty', PASSWORD_DEFAULT),
             'isAdmin' => 0
         ];
         $users->insert($data)->save();
