@@ -148,10 +148,8 @@ class NewsController
 
     /**
      * Метод валидации полей title и content
-     * убирает html теги
      * возвращает false если хотя бы одно поле не заполнено
-     * возвращает массив с элементами title и content, если оба поля заполнены
-     * @return array|bool
+     * @return bool
      */
     private function isValidateFields()
     {
@@ -161,6 +159,12 @@ class NewsController
         return true;
     }
 
+    /**
+     * Возвращает массив с элементами title и content,
+     * поле title без html тегов
+     * поле content экранирует html теги
+     * @return array
+     */
     private function filteringData()
     {
         $title = strip_tags($_POST['title']);
