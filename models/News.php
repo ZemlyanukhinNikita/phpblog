@@ -3,9 +3,7 @@
 namespace models;
 
 
-use config\Database;
-
-class News
+class News extends Model
 {
     private $conn;
 
@@ -14,8 +12,7 @@ class News
      */
     public function __construct()
     {
-        $db = new Database();
-        $this->conn = $db->getConnection();
+        $this->conn = parent::getDbConnection();
     }
 
     /**
@@ -30,7 +27,6 @@ class News
 
         $i = 0;
         while ($row = $stmt->fetch()) {
-
             $news[$i]['id'] = $row['id'];
             $news[$i]['title'] = $row['title'];
             $news[$i]['content'] = $row['content'];
@@ -127,5 +123,4 @@ class News
         }
         return null;
     }
-
 }

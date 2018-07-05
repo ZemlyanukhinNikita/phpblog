@@ -2,11 +2,9 @@
 
 namespace models;
 
-
-use config\Database;
 use PDO;
 
-class User
+class User extends Model
 {
     private $conn;
 
@@ -15,10 +13,14 @@ class User
      */
     public function __construct()
     {
-        $db = new Database();
-        $this->conn = $db->getConnection();
+        $this->conn = parent::getDbConnection();
     }
 
+    /**
+     * Получить пользователя по логину
+     * @param $login
+     * @return mixed
+     */
     public function getUserByLogin($login)
     {
         $stmt = $this->conn->prepare("select * from users where login = ?");
@@ -28,6 +30,9 @@ class User
         return $user;
     }
 
+    /**
+     * @return bool
+     */
     public function isAdmin()
     {
         if ($_SESSION['logged_user']['isAdmin'] == 1) {
