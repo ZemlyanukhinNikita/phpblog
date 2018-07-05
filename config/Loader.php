@@ -7,7 +7,7 @@ class Loader
     {
         $arr = explode('\\', $class);
         $prefix = array_shift($arr);
-        //echo $prefix;
+
         if ($prefix == 'controllers') {
             $prefix_file = 'controllers/';
         } elseif ($prefix == 'config') {
@@ -16,7 +16,7 @@ class Loader
             $prefix_file = 'models/';
         }
         $file = $prefix_file . implode('/', $arr) . '.php';
-        //echo $file;
+
         if (is_file($file)) {
             require_once $file;
         }
