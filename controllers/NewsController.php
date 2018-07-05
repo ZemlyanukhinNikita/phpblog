@@ -153,7 +153,7 @@ class NewsController
     private function validateFields()
     {
         $title = strip_tags($_POST['title']);
-        $content = strip_tags($_POST['content']);
+        $content = htmlspecialchars($_POST['content']);
         $data = ['title' => $title, 'content' => $content];
         if (empty($title) || empty($content)) {
             return false;
