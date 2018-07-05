@@ -1,5 +1,5 @@
 <?php
-//phpinfo();
+session_start();
 
 use config\Router;
 
