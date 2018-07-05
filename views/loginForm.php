@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <?php require_once 'layouts/header.php' ?>
 <div class="wrapper">
     <div class="content">

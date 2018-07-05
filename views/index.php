@@ -1,10 +1,9 @@
-﻿<?php session_start(); ?>
-<?php require_once 'layouts/header.php' ?>
+﻿<?php require_once 'layouts/header.php' ?>
 
 <div class="wrapper">
 
     <div class="content">
-        <?php if ($_SESSION['logged_user']['isAdmin'] == 1) { ?>
+        <?php if (isset($_SESSION['logged_user']) && $_SESSION['logged_user']['isAdmin'] == 1) { ?>
             <span class="addNew"><h3><a href="/news/addNew">Добавить новость</a></h3></span>
         <?php } ?>
         <?php foreach ($newsList as $item): ?>
@@ -14,8 +13,8 @@
                 <?php } ?>
                 <h3><a href="/news/<?php echo $item['id'] ?>"> <?php echo $item['title'] ?></a></h3>
                 <p><?php
-                    $text = strip_tags($item['content']);
-                    echo substr($text, 0, 300) ?></p>
+                    $text = html_entity_decode($item['content']);
+                    echo mb_substr($text, 0, 300) ?></p>
             </div>
         <?php endforeach; ?>
     </div>

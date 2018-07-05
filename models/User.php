@@ -30,7 +30,6 @@ class User
 
     public function isAdmin()
     {
-        session_start();
         if ($_SESSION['logged_user']['isAdmin'] == 1) {
             return true;
         }
