@@ -43,8 +43,8 @@ class Router
 
                 $controllerObject = new $controllerName;
 
-                $result =null;
-                if(method_exists($controllerObject, $actionName)) {
+                $result = null;
+                if (method_exists($controllerObject, $actionName)) {
                     $result = call_user_func_array([$controllerObject, $actionName], $parameters);
                 }
 

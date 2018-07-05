@@ -15,7 +15,7 @@ class Loader
         } elseif ($prefix == 'models') {
             $prefix_file = 'models/';
         }
-        $file = '../'.$prefix_file . implode('/', $arr) . '.php';
+        $file = '../' . $prefix_file . implode('/', $arr) . '.php';
 
         if (is_file($file)) {
             require_once $file;
