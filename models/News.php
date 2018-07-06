@@ -3,6 +3,8 @@
 namespace models;
 
 
+use PDO;
+
 class News extends Model
 {
     private $conn;
@@ -36,6 +38,23 @@ class News extends Model
             $news[$i]['updated_at'] = $row['updated_at'];
             $i++;
         }
+        return $news;
+    }
+
+    /**
+     * Метод получения топ 10 новостей за посленднюю неделю
+     * @return array
+     */
+    public function getTopNews()
+    {
+        $result = $this->conn->query("
+            select * 
+            from news 
+            where created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY) 
+            order by views 
+            desc LIMIT 10
+        ");
+        $news = $result->fetchAll(PDO::FETCH_ASSOC);
         return $news;
     }
 
