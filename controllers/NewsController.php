@@ -25,6 +25,7 @@ class NewsController
     public function index()
     {
         $newsList = $this->newsModel->getAllNews();
+        $topNewsList = $this->newsModel->getTopNews();
         require_once $_SERVER['DOCUMENT_ROOT'] . '/views/index.php';
     }
 
