@@ -40,7 +40,9 @@ class AuthController
         if (($user['login'] == $login) && password_verify($password, $user['password'])) {
             $_SESSION['logged_user'] = $user;
             return true;
-        } elseif ($login != $user['login']) {
+        }
+
+        if ($login != $user['login']) {
             $errorMessage = 'Неверный логин';
             require_once $_SERVER['DOCUMENT_ROOT'] . '/views/loginForm.php';
         } else {
