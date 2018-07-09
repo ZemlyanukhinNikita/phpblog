@@ -126,8 +126,8 @@ class News extends Model
     public function updateNew($id, $title, $content, $previewImage)
     {
         $id = intval($id);
-        if ($id) {
 
+        if ($id) {
             if ($previewImage) {
                 $stmt = $this->conn->prepare("update news
                                                         set title=?, content=?, preview_image_slug=?
